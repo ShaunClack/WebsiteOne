@@ -24,7 +24,6 @@ You'll do your development work on your own copy of the project.
 
 If you need more information about git and GitHub, see this [general guide to getting set up with an AgileVentures project](http://www.agileventures.org/articles/project-setup-new-users) (use https://github.com/AgileVentures/WebsiteOne as the project URL).
 
-
 You should now have the entire project -- all of the directories and files -- on your local machine, _and_ it should have a `git` repository (`.git`).
 
 When you've finished working on you changes, create a pull request (PR) on GitHub. Here are [detailed insttructions on how to create a pull request for WSO](how_to_submit_a_pull_request_on_github.md).
@@ -55,7 +54,7 @@ See the [Docker Project Setup](../docker/README.md) documentation
 
 ## Option 2 - Local Installation
 
-### Step 1: Install the gems with `bundle install`
+### Step 1 of Local Install: Install the gems with `bundle install`
 
     bundle install
 
@@ -70,21 +69,25 @@ If you then try to install the `eventmachine` gem, it also fails like this: http
     brew link openssl --force
 
 After you do that, re-try running `bundle install` and you should be good to go on to the next step.
-    
-#### PostgreSQL and the `pg` gem
-The database used is [postgreSQL](https://www.postgresql.org/).  You need to have this installed and running on your local machine. 
-(The `pg` gem accesses the postgreSQL database.)  [Here are instructions on installing postgreSQL.](development_environment_set_up.md#postgreSQL)
 
-#### Updating Rails
-If you need to update rails, you can run `bundle update rails`.  If you run into problems with rails and `libv8` on OS X, try this:
-```shell
-   gem uninstall libv8
-   brew install v8
-   gem install therubyracer
-   gem install libv8 -v '3.16.14.3' -- --with-system-v8
-```
-    
-### Step 2: Install javascript dependencies using `npm`
+**Note:** If you get this error:
+Your Ruby version is 2.7.0, but your Gemfile specified 2.6.3
+
+Check if you have Ruby 2.6.3
+    `rvm list`
+
+If you have 2.6.3, type:
+    `rvm use 2.6.3`
+If you do not have 2.6.3, type:
+    `rvm install 2.6.3`
+
+### Step 2 of Local Install: PostgreSQL and the `pg` gem
+The database used is [postgreSQL](https://www.postgresql.org/).  You need to have this installed and running on your local machine. 
+[Here are instructions on installing postgreSQL.](development_environment_set_up.md#postgreSQL)
+
+(Info only: the `pg` gem accesses the postgreSQL database.)
+
+### Step 3 of Local Install: Install javascript dependencies using `npm`
 * Use [npm](https://www.npmjs.com/) to install all of the javascript dependencies for WSO: 
 
     `npm install`
@@ -93,21 +96,27 @@ If you need to update rails, you can run `bundle update rails`.  If you run into
 
     `npm install bower`
 
-#### Phantomjs
+### Step 4 of Local Install: Phantomjs
 [Phantomjs](http://phantomjs.org/) is used to run tests.  [Here are detailed instructions for installing it.](development_environment_set_up.md#phantomjs)
 
-### Step 3: Request the .env file and confirm your locale
+### Step 5 of Local Install: Request the .env file and confirm your locale
     
 * You'll have to get the `.env` file from one of the admins: @tansaku or @diraulo.  The project won't work without it.  You can send them a direct message (DM) on Slack.  The `.env` file should go in the root of the WSO project.
-* Add the following to that file:
+* It should look something like:
 
 ```
 RECAPTCHA_SITE_KEY=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
 RECAPTCHA_SECRET_KEY=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+SECRET_KEY_BASE=blabla
+
+You may also need:
+
+RACK_TIMEOUT_SERVICE_TIMEOUT=200000000
+STRIPE_SECRET_KEY=xxxx
+STRIPE_PUBLISHABLE_KEY=xxxx
 AIRBRAKE_API_KEY=blahblahblah
 AIRBRAKE_PROJECT_ID=123
-SECRET_KEY_BASE=blabla
-RACK_TIMEOUT_SERVICE_TIMEOUT=200000000
+
 ```
 
 the above are test keys from https://developers.google.com/recaptcha/docs/faq
@@ -152,4 +161,16 @@ We recommend and follow the [Ruby Style Guide](https://github.com/bbatsov/ruby-s
 
 
 [Note: This page originally at https://github.com/AgileVentures/WebsiteOne/wiki/Project-Setup-%28New-Users%29]
+
+# Appendix
+
+## Updating Rails
+If you need to update rails, you can run `bundle update rails`.  If you run into problems with rails and `libv8` on OS X, try this:
+```shell
+   gem uninstall libv8
+   brew install v8
+   gem install therubyracer
+   gem install libv8 -v '3.16.14.3' -- --with-system-v8
+```
+  
 
